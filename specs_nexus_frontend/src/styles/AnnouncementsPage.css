@@ -1,0 +1,68 @@
+/* Announcement Page Styles */
+.announcements-page {
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+  padding: 2rem;
+  gap: 1rem;
+}
+
+.announcements-content {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 20px;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  max-height: calc(100vh - 2rem);
+}
+
+.announcements-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  margin-bottom: 1rem;
+}
+
+.announcements-header h1 {
+  margin: 0;
+  font-size: 1.8rem;
+}
+
+.current-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+
+.announcements-list {
+  margin-top: 2rem;
+}
+
+.announcements-items {
+  display: flex;
+  flex-direction: column;
+  gap: 1.5rem;
+}
+
+.announcement-item {
+  background-color: #fff;
+  padding: 1.5rem;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+
+.announcement-item:hover {
+  background-color: #f5f5f5;
+}
+
+.announcement-item h3 {
+  margin: 0;
+  font-size: 1.5rem;
+}
+
+.announcement-item p {
+  margin-top: 0.5rem;
+  font-size: 1rem;
+  color: #555;
+}

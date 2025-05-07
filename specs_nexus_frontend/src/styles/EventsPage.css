@@ -1,0 +1,24 @@
+/* EventsPage.css */
+.events-page {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.events-header {
+  text-align: center;
+  margin-bottom: 2rem;
+  color: #333;
+}
+
+.events-content {
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+}
+
+.current-date {
+  font-size: 0.9rem;
+  color: #666;
+}
+

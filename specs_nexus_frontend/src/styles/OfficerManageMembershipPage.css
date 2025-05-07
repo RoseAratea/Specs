@@ -1,0 +1,177 @@
+.officer-manage-membership-page {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+/* Membership tabs */
+.membership-tabs {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+}
+
+.membership-tabs button {
+  padding: 0.5rem 1rem;
+  border: none;
+  border-radius: 4px;
+  background-color: #ddd;
+  cursor: pointer;
+  transition: background 0.3s;
+}
+
+.membership-tabs button.active {
+  background-color: #007bff;
+  color: #fff;
+}
+
+/* Additional filters */
+.additional-filters {
+  display: flex;
+  gap: 1rem;
+  margin-bottom: 1rem;
+  flex-wrap: wrap;
+}
+
+.filter-item {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.filter-item input {
+  padding: 0.3rem 0.5rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+/* Removed the add membership button as the add new membership function is removed */
+
+/* New button styles for Manage QR Code and Add Requirement */
+.manage-qr-code-btn,
+.add-requirement-btn {
+  padding: 0.75rem 1rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-weight: bold;
+  transition: background 0.3s, transform 0.2s;
+}
+
+.manage-qr-code-btn {
+  background-color: #17a2b8; /* info color */
+  color: #fff;
+}
+
+.manage-qr-code-btn:hover {
+  background-color: #138496;
+  transform: scale(1.05);
+}
+
+.add-requirement-btn {
+  background-color: #ffc107; /* warning color */
+  color: #212529;
+}
+
+.add-requirement-btn:hover {
+  background-color: #e0a800;
+  transform: scale(1.05);
+}
+
+/* Membership table */
+.membership-table {
+  width: 100%;
+  border-collapse: collapse;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  margin-bottom: 2rem;
+}
+
+.membership-table th,
+.membership-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.membership-table th {
+  background-color: #f0f0f0;
+}
+
+.membership-table td button {
+  margin-right: 0.5rem;
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.membership-table td button:first-child {
+  background-color: #28a745; /* Approve - green */
+  color: #fff;
+}
+
+.membership-table td button:last-child {
+  background-color: #dc3545; /* Deny - red */
+  color: #fff;
+}
+
+.membership-table td button:hover {
+  opacity: 0.9;
+}
+
+/* Edit Requirement Modal: Only show edit for the amount */
+.edit-requirement-modal {
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  max-width: 400px;
+  margin: auto;
+}
+
+.edit-requirement-modal .modal-header {
+  font-size: 1.25rem;
+  margin-bottom: 1rem;
+}
+
+.edit-requirement-modal .modal-body {
+  display: flex;
+  flex-direction: column;
+  gap: 1rem;
+}
+
+/* Only the amount input is displayed */
+.edit-requirement-modal .amount-input {
+  display: block;
+}
+
+/* Hide any other fields (if they have a common class) */
+.edit-requirement-modal .non-amount {
+  display: none;
+}
+
+/* Manage QR Code Section */
+.manage-qr-code-section {
+  padding: 1.5rem;
+  background: #fff;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.15);
+  margin-top: 2rem;
+}
+
+/* Removed select requirement styles */
+
+/* QR Code Preview */
+.qr-code-preview {
+  margin-top: 1rem;
+  text-align: center;
+}
+
+.qr-code-preview img {
+  max-width: 200px;
+  border: 1px solid #ddd;
+  border-radius: 4px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}

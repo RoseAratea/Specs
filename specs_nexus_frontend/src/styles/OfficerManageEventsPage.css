@@ -1,0 +1,136 @@
+/* Layout Container */
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #3B4E38;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 100%;
+}
+
+.officer-manage-events-page {
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+  border-radius: 20px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Events Header */
+.events-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.events-header h1 {
+  color: #333;
+  margin: 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+}
+
+/* Add Event Button */
+.add-event-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  font-size: 1rem;
+}
+
+.add-event-btn:hover {
+  background-color: #218838;
+}
+
+/* Event Grid */
+.events-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  justify-content: start;
+}
+
+/* Event Card */
+.event-card {
+  background: #fff;
+  border-radius: 8px;
+  width: 250px;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+  transition: transform 0.2s ease-in-out;
+}
+
+.event-card:hover {
+  transform: translateY(-5px);
+}
+
+.event-image {
+  width: 100%;
+  height: 140px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 1rem;
+}
+
+.event-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1.1rem;
+  color: #333;
+  font-weight: 600;
+}
+
+.event-card p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.card-actions {
+  display: flex;
+
+  justify-content:space-between;
+  margin-top: auto;
+}
+
+.card-actions button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s ease-in-out;
+}
+
+.card-actions button:first-child {
+  background-color: #ffc107; /* Edit - yellow */
+  color: #333;
+}
+
+.card-actions button:last-child {
+  background-color: #dc3545; /* Delete - red */
+  color: #fff;
+}
+
+.card-actions button:hover {
+  background-color: #b32e2e;
+  opacity: 0.9;
+}

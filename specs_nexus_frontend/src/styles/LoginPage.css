@@ -1,0 +1,238 @@
+@import url('https://fonts.googleapis.com/css2?family=Dela+Gothic+One&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Konkhmer+Sleokchher&display=swap');
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html, body {
+  height: 100%;
+  overflow: hidden;
+}
+
+.login-page {
+  font-family: 'Dela Gothic One', sans-serif;
+  background-color: #344e35;
+  color: white;
+  height: 100%;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 1.5rem 2rem;
+  background-color: transparent;
+  gap: 1rem;
+  position: relative;
+  z-index: 2;
+}
+
+.header-content {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.header-logo {
+  width: 60px;
+  height: auto;
+}
+
+.header-title {
+  font-size: 2.2rem;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+}
+
+.specs {
+  color: #f47c3c;
+  margin-right: 0.3rem;
+}
+
+.nexus {
+  color: #c0c0c0;
+}
+
+.login-button {
+  background-color: #4B5320;
+  color: #fff;
+  border: none;
+  padding: 8px 16px;
+  border-radius: 50px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+  font-size: 14px;
+  font-family: 'Konkhmer Sleokchher', sans-serif;
+}
+
+.login-button:hover {
+  background-color: #3a4218;
+}
+
+.container {
+  position: relative;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  height: calc(100vh - 100px);
+  overflow: hidden;
+  padding: 1rem 2rem;
+}
+
+.left-section {
+  width: 80%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  position: relative;
+  z-index: 1;
+}
+
+.acronym {
+  list-style: none;
+  font-size: 3rem;
+  line-height: 4rem;
+  font-weight: bold;
+}
+
+.acronym li span {
+  color: #f47c3c;
+  font-weight: bold;
+  margin-right: 0.5rem;
+}
+
+.seals {
+  margin-top: 7rem;
+}
+
+.seals img {
+  width: 65px;
+  margin-right: 10px;
+}
+
+.right-section {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  z-index: 0;
+  opacity: 0.06;
+  display: flex;
+  justify-content: flex-end;
+  align-items: center;
+  pointer-events: none;
+  overflow: hidden;
+  transform: scale(1.2);
+  padding-right: 5vw;
+}
+
+.seal-image {
+  width: auto;
+  height: 90%;
+  object-fit: contain;
+}
+
+.modal {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 999;
+}
+
+.modal-content {
+  background-color: #fff;
+  border-radius: 25px;
+  width: 325px;
+  min-height: 375px;
+  padding: 40px 30px;
+  position: relative;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+  animation: slideDown 0.4s ease-out;
+  font-family: 'Konkhmer Sleokchher', sans-serif;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+@keyframes slideDown {
+  from {
+    transform: translateY(-20px);
+    opacity: 0;
+  }
+  to {
+    transform: translateY(0);
+    opacity: 1;
+  }
+}
+
+.welcome-title {
+  font-family: 'Dela Gothic One', cursive;
+  font-size: 2.5rem;
+  text-align: center;
+  margin-bottom: 45px;
+  color: #333;
+  margin-top: -10px;
+}
+
+.close {
+  position: absolute;
+  top: 10px;
+  right: 15px;
+  font-size: 28px;
+  color: #aaa;
+  cursor: pointer;
+}
+
+.close:hover {
+  color: #000;
+}
+
+.modal-content input {
+  width: 100%;
+  padding: 10px;
+  margin-bottom: 20px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 25px;
+  transition: border-color 0.2s;
+}
+
+.modal-content input:focus {
+  outline: none;
+  border-color: #4B5320;
+}
+
+.modal-content button.modal-login-button {
+  width: 150px;
+  padding: 6px 20px;
+  font-size: 0.9rem;
+  border: none;
+  border-radius: 5px;
+  background-color: #4B5320;
+  color: #fff;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.modal-content button.modal-login-button:hover {
+  background-color: #3a4218;
+}
+
+.error {
+  color: red;
+  text-align: center;
+  margin-bottom: 10px;
+}

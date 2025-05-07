@@ -1,0 +1,55 @@
+.modal-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 1rem;
+  z-index: 1000;
+}
+
+.modal-container {
+  background: #fff;
+  border-radius: 8px;
+  padding: 2rem;
+  width: 100%;
+  max-width: 500px;
+  max-height: 90vh;  /* constrain modal height */
+  overflow-y: auto;  /* allow scrolling for overflowing content */
+  position: relative;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+}
+
+.modal-close {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  background: none;
+  border: none;
+  font-size: 1.5rem;
+  cursor: pointer;
+}
+
+.modal-section {
+  margin-bottom: 1.5rem;
+  text-align: center;
+}
+
+/* For QR code image container: limit height */
+.image-container {
+  max-height: 300px;
+  overflow: hidden;
+}
+
+/* Ensure images scale responsively */
+.qr-preview,
+.receipt-preview {
+  max-width: 100%;
+  height: auto;
+  border-radius: 4px;
+  margin-top: 0.5rem;
+}

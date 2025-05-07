@@ -1,0 +1,31 @@
+.announcement-card {
+    background: #fff;
+    border-radius: 8px;
+    padding: 1rem;
+    margin: 1rem;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+    cursor: pointer;
+    transition: transform 0.2s;
+  }
+  
+  .announcement-card:hover {
+    transform: scale(1.02);
+  }
+  
+  .announcement-image {
+    width: 100%;
+    height: auto;
+    border-radius: 4px;
+    margin-bottom: 0.5rem;
+  }
+  
+  .announcement-title {
+    margin: 0 0 0.5rem;
+    color: #333;
+  }
+  
+  .announcement-content {
+    font-size: 0.95rem;
+    color: #555;
+  }
+  

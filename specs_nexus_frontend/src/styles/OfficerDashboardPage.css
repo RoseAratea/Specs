@@ -1,0 +1,120 @@
+/* Overall Layout */
+.layout-container {
+  display: flex;
+  min-height: 100vh;
+  background-color: #3B4E38;
+  padding: 2rem;
+  gap: 2rem;
+}
+
+/* Main Content Area */
+.main-content {
+  flex: 1;
+  background-color: #ffffff;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+  overflow-y: auto;
+  display: flex;
+  flex-direction: column;
+  gap: 2rem;
+  max-width: 100%;
+}
+
+/* Title */
+.dashboard-title {
+  font-size: 2.25rem;
+  font-weight: 700;
+  color: #2e2e2e;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+/* Analytics Card */
+.card {
+  background-color: #f9f9f9;
+  border-radius: 1.5rem;
+  padding: 2rem;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  transition: box-shadow 0.3s ease, transform 0.3s ease;
+}
+
+.card:hover {
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.15);
+  transform: translateY(-4px);
+}
+
+/* Stat Box Layout */
+.stats-row {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 1.5rem;
+  margin-bottom: 2rem;
+}
+
+/* Individual Stat Box */
+.stat-box {
+  background-color: #e6edec;
+  border-radius: 1rem;
+  padding: 1.5rem;
+  text-align: center;
+  transition: background-color 0.3s ease, transform 0.3s ease;
+  cursor: pointer;
+}
+
+.stat-box:hover {
+  background-color: #d9e7e3;
+  transform: translateY(-3px);
+}
+
+.stat-box p {
+  font-size: 1rem;
+  font-weight: 600;
+  color: #555;
+  margin: 0;
+}
+
+.stat-box h2 {
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 1rem;
+  color: #2b3a2e;
+}
+
+/* Chart Box Styling */
+.chart-box {
+  padding: 2rem;
+  border-radius: 1.5rem;
+  background-color: #ffffff;
+  box-shadow: 0 4px 16px rgba(0, 0, 0, 0.1);
+}
+
+/* Loading State */
+.loading {
+  font-size: 1.25rem;
+  font-weight: 500;
+  color: #888;
+  text-align: center;
+  margin-top: 2rem;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .layout-container {
+    padding: 1rem;
+    flex-direction: column;
+  }
+
+  .main-content {
+    padding: 1.5rem;
+  }
+
+  .stats-row {
+    grid-template-columns: 1fr;
+    gap: 1rem;
+  }
+
+  .card {
+    padding: 1.5rem;
+  }
+}
