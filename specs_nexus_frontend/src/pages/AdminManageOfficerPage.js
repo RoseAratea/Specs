@@ -17,17 +17,21 @@ const AdminManageOfficerPage = () => {
   const [showModal, setShowModal] = useState(false);
   const [selectedOfficer, setSelectedOfficer] = useState(null);
   const [importFile, setImportFile] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     fetchOfficers();
   }, []);
 
   const fetchOfficers = async () => {
+    setIsLoading(true);
     try {
       const data = await getOfficers();
       setOfficers(data);
     } catch (error) {
       console.error(error);
+    } finally {
+      setIsLoading(false);
     }
   };
 
@@ -127,6 +131,14 @@ const AdminManageOfficerPage = () => {
       alert("Error saving officer");
     }
   };
+
+  if (isLoading) {
+    return (
+      <OfficerLayout>
+        <div className="loading">Loading Officers Data...</div>
+      </OfficerLayout>
+    );
+  }
 
   return (
     <OfficerLayout>

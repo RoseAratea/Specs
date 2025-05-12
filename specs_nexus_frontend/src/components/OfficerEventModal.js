@@ -8,6 +8,8 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
   const [location, setLocation] = useState('');
   const [imageFile, setImageFile] = useState(null);
   const [previewUrl, setPreviewUrl] = useState('');
+  const [registrationStart, setRegistrationStart] = useState('');
+  const [registrationEnd, setRegistrationEnd] = useState('');
 
   useEffect(() => {
     if (initialEvent) {
@@ -15,14 +17,17 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
       setDetails(initialEvent.description || '');
       setDateTime(initialEvent.date ? initialEvent.date.slice(0, 16) : '');
       setLocation(initialEvent.location || '');
+      setRegistrationStart(initialEvent.registration_start ? initialEvent.registration_start.slice(0, 16) : '');
+      setRegistrationEnd(initialEvent.registration_end ? initialEvent.registration_end.slice(0, 16) : '');
       setImageFile(null);
       setPreviewUrl(''); 
     } else {
-
       setTitle('');
       setDetails('');
       setDateTime('');
       setLocation('');
+      setRegistrationStart('');
+      setRegistrationEnd('');
       setImageFile(null);
       setPreviewUrl('');
     }
@@ -51,6 +56,12 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
     formData.append('description', details);
     formData.append('date', new Date(dateTime).toISOString());
     formData.append('location', location);
+    if (registrationStart) {
+      formData.append('registration_start', new Date(registrationStart).toISOString());
+    }
+    if (registrationEnd) {
+      formData.append('registration_end', new Date(registrationEnd).toISOString());
+    }
     if (imageFile) {
       formData.append('image', imageFile);
     }
@@ -101,6 +112,22 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             required
+          />
+
+          <label>Registration Start:</label>
+          <input
+            type="datetime-local"
+            value={registrationStart}
+            onChange={(e) => setRegistrationStart(e.target.value)}
+            placeholder="Leave empty for immediate registration"
+          />
+
+          <label>Registration End:</label>
+          <input
+            type="datetime-local"
+            value={registrationEnd}
+            onChange={(e) => setRegistrationEnd(e.target.value)}
+            placeholder="Leave empty for no deadline"
           />
 
           <label>Image:</label>

@@ -4,7 +4,6 @@
   min-height: 100vh;
   background-color: #3B4E38;
   padding: 1rem;
-  gap: 1rem;
 }
 
 /* Main Content Area */
@@ -12,28 +11,55 @@
   flex: 1;
   background-color: #ffffff;
   border-radius: 20px;
-  padding: 2rem;
+  padding: 1rem;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   overflow-y: auto;
   max-height: calc(100vh - 2rem);
 }
 
-/* Header */
 .dashboard-header {
   display: flex;
   justify-content: space-between;
-  align-items: baseline;
-  margin-bottom: 1rem;
+  align-items: center;
+  padding-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  border-bottom: 1px solid #e2e8f0;
 }
 
-.dashboard-header h1 {
-  margin: 0;
-  font-size: 1.8rem;
+.dashboard-left {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+}
+
+.sidebar-toggle-inside {
+  background-color: #f1f5f9;
+  border: none;
+  border-radius: 8px;
+  padding: 0.5rem 0.6rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 1.2rem;
+  color: #334155;
+  cursor: pointer;
+  transition: background-color 0.2s ease;
+}
+
+.sidebar-toggle-inside:hover {
+  background-color: #e2e8f0;
+}
+
+.dashboard-title {
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: #0f172a;
 }
 
 .current-date {
-  font-size: 0.9rem;
-  color: #666;
+  font-size: 0.95rem;
+  color: #475569;
+  font-weight: 500;
 }
 
 /* About Section */
@@ -46,59 +72,88 @@
   border-left: 5px solid #4caf50;
 }
 
-/* Section Container */
+/* Clearance and Membership Section */
 .clearance-membership-section {
   display: flex;
-  gap: 2rem;
   flex-wrap: wrap;
+  gap: 2rem;
 }
 
-/* Shared Card Design for Sections */
+/* Shared Card Design for Both Sections */
 .clearance-section,
 .membership-section {
-  flex: 1;
-  min-width: 300px;
   background-color: #fff;
   padding: 1.5rem;
   border-radius: 12px;
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.06);
   border-left: 6px solid #4caf50;
-  transition: transform 0.2s ease;
+  flex: 1;
+  min-width: 300px;
+  height: 100%;
 }
 
-
-/* Table inside Clearance Section */
-.clearance-section table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.clearance-section th,
-.clearance-section td {
-  border: 1px solid #ddd;
-  padding: 0.5rem;
-  text-align: left;
-}
-
-.membership-section p {
-  margin: 0.5rem 0;
-  color: #555;
-}
-
-/* Clearance Grid Cards */
 .clearance-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: 1fr; /* Single column */
   gap: 1rem;
-  margin-top: 1rem;
 }
 
-/* Individual Clearance Card */
 .clearance-card {
   background-color: #fdfdfd;
   padding: 1rem;
   border: 1px solid #dcdcdc;
   border-radius: 10px;
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.05);
-  transition: transform 0.2s ease;
+}
+
+.membership-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.membership-table th,
+.membership-table td {
+  padding: 0.75rem;
+  border: 1px solid #ddd;
+  text-align: left;
+}
+
+.membership-table th {
+  background-color: #f0f4f8;
+}
+
+.membership-section p {
+  color: #555;
+}
+
+/* Loading and Error Message Styling */
+.loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+  background-color: #3B4E38;
+}
+
+.error-message {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #fff3f3;
+  color: #d32f2f;
+  padding: 2rem;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+  .layout-container {
+    flex-direction: column;
+    padding: 1rem;
+  }
+
+  .clearance-membership-section {
+    flex-direction: column;
+  }
 }

@@ -10,7 +10,7 @@ class UserBase(BaseModel):
     block: Optional[str] = None
 
 class UserLogin(BaseModel):
-    email: EmailStr
+    email_or_student_number: str  # Changed from email: EmailStr
     password: str
 
 class UserInfo(BaseModel):
@@ -64,6 +64,11 @@ class EventSchema(BaseModel):
     image_url: Optional[str]
     location: Optional[str] = None
     participant_count: int
+    registration_start: Optional[datetime] = None
+    registration_end: Optional[datetime] = None
+    registration_open: bool
+    registration_status: str
+    is_participant: Optional[bool] = False  # New field to track if current user is participating
 
     class Config:
         orm_mode = True

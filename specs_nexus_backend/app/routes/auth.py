@@ -20,15 +20,25 @@ def get_db():
         db.close()
 
 # Endpoint: POST /auth/login
-# Description: Authenticates a user with email and password. If successful, updates the user's last active time (using Philippine Time)
+# Description: Authenticates a user with email/student_number and password. If successful, updates the user's last active time (using Philippine Time)
 # and returns a JWT access token.
 @router.post("/login", response_model=dict)
-def login(user: schemas.UserLogin, db: Session = Depends(get_db)):
-    logger.debug(f"Login attempt for email: {user.email}")
-    db_user = auth_utils.get_user_by_email(db, user.email)
+def login(user_login: schemas.UserLogin, db: Session = Depends(get_db)):
+    logger.debug(f"Login attempt for user: {user_login.email_or_student_number}")
     
-    if not db_user or db_user.password != user.password:
-        logger.error(f"Invalid credentials for email: {user.email}")
+    # Check if login is using email or student number
+    db_user = None
+    if '@' in user_login.email_or_student_number:
+        # Login with email
+        db_user = auth_utils.get_user_by_email(db, user_login.email_or_student_number)
+        logger.debug(f"Login attempt using email: {user_login.email_or_student_number}")
+    else:
+        # Login with student number
+        db_user = auth_utils.get_user_by_student_number(db, user_login.email_or_student_number)
+        logger.debug(f"Login attempt using student number: {user_login.email_or_student_number}")
+    
+    if not db_user or db_user.password != user_login.password:
+        logger.error(f"Invalid credentials for user: {user_login.email_or_student_number}")
         raise HTTPException(status_code=400, detail="Invalid credentials")
     
     philippine_tz = timezone(timedelta(hours=8))

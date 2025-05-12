@@ -1,9 +1,9 @@
 import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import { FaTachometerAlt, FaUser, FaCalendarAlt, FaBullhorn, FaUsers, FaTools, FaSignOutAlt } from 'react-icons/fa';
+import { FaTachometerAlt, FaUser, FaCalendarAlt, FaBullhorn, FaUsers, FaTools, FaSignOutAlt, FaTimes } from 'react-icons/fa';
 import '../styles/Sidebar.css';
 
-const Sidebar = ({ user }) => {
+const Sidebar = ({ user, isOpen, closeSidebar }) => {
   const navigate = useNavigate();
 
   const handleLogout = () => {
@@ -14,7 +14,8 @@ const Sidebar = ({ user }) => {
   };
 
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isOpen ? 'open' : ''}`}>
+
       <div className="user-info">
         <h3>{user.full_name || "User Name"}</h3>
         <p>{user.student_number || "Student Number"}</p>

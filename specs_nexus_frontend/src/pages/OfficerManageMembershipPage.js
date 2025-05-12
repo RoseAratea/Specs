@@ -29,6 +29,7 @@ const OfficerManageMembershipPage = () => {
   const [filterYear, setFilterYear] = useState('All');
   const [filterRequirement, setFilterRequirement] = useState('All');
   const [searchName, setSearchName] = useState('');
+  const [isLoading, setIsLoading] = useState(true);
 
   const token = localStorage.getItem('officerAccessToken');
 
@@ -44,8 +45,10 @@ const OfficerManageMembershipPage = () => {
       try {
         const data = await getOfficerMemberships(token);
         setMemberships(data);
+        setIsLoading(false);
       } catch (error) {
         console.error("Failed to fetch memberships:", error);
+        setIsLoading(false);
       }
     }
     fetchMemberships();
@@ -169,11 +172,16 @@ const OfficerManageMembershipPage = () => {
     const yearMatch = filterYear === 'All' ? true : (m.user?.year === filterYear);
     const reqMatch = filterRequirement === 'All' ? true : (m.requirement === filterRequirement);
     const nameMatch = searchName === '' ? true : m.user?.full_name.toLowerCase().includes(searchName.toLowerCase());
+    
     return statusMatch && blockMatch && yearMatch && reqMatch && nameMatch;
   });
 
-  if (!officer) {
-    return <div>Loading Officer Info...</div>;
+  if (isLoading) {
+    return (
+      <OfficerLayout officer={officer}>
+        <div className="loading">Loading Membership...</div>
+      </OfficerLayout>
+    );
   }
 
   return (

@@ -13,27 +13,30 @@ const OfficerManageEventsPage = () => {
   const [selectedEvent, setSelectedEvent] = useState(null);
   const [showParticipantsModal, setShowParticipantsModal] = useState(false);
   const [participants, setParticipants] = useState([]);
+  const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('officerAccessToken');
 
   useEffect(() => {
-    const storedOfficer = localStorage.getItem('officerInfo');
-    if (storedOfficer) {
-      setOfficer(JSON.parse(storedOfficer));
-    }
-  }, []);
-
-  useEffect(() => {
-    async function fetchAllEvents() {
+    async function fetchData() {
       try {
-        const data = await getOfficerEvents(token);
-        setEvents(data);
+        // Get officer info
+        const storedOfficer = localStorage.getItem('officerInfo');
+        const officerData = storedOfficer ? JSON.parse(storedOfficer) : null;
+        setOfficer(officerData);
+        
+        // Get events data
+        if (token) {
+          const eventsData = await getOfficerEvents(token);
+          setEvents(eventsData);
+        }
       } catch (error) {
-        console.error("Failed to fetch events:", error);
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
-    if (token) {
-      fetchAllEvents();
-    }
+    
+    fetchData();
   }, [token]);
 
   const handleAddNewEvent = () => {
@@ -95,8 +98,12 @@ const OfficerManageEventsPage = () => {
     }
   };
 
+  if (isLoading) {
+    return <div className="loading">Loading Events...</div>;
+  }
+
   if (!officer) {
-    return <div>Loading Officer Info...</div>;
+    return <div className="error-message">Unable to load officer information. Please try again later.</div>;
   }
 
   return (
@@ -110,27 +117,31 @@ const OfficerManageEventsPage = () => {
           </button>
         </div>
         <div className="events-grid">
-          {events.map((evt) => (
-            <div key={evt.id} className="event-card">
-              <img
-                src={evt.image_url ? (evt.image_url.startsWith("http") ? evt.image_url : `http://localhost:8000${evt.image_url}`) : "/default_event.png"}
-                alt={evt.title}
-                className="event-image"
-                onClick={() => handleViewParticipants(evt.id)}
-                style={{ cursor: 'pointer' }}
-              />
-              <h3>{evt.title}</h3>
-              <p>{new Date(evt.date).toLocaleString()}</p>
-              <p>{evt.location}</p>
-              <p className="event-details">
-                {evt.description.length > 100 ? evt.description.slice(0, 100) + '...' : evt.description}
-              </p>
-              <div className="card-actions">
-                <button onClick={() => handleEdit(evt)}>Edit</button>
-                <button onClick={() => handleDelete(evt.id)}>Delete</button>
+          {events.length > 0 ? (
+            events.map((evt) => (
+              <div key={evt.id} className="event-card">
+                <img
+                  src={evt.image_url ? (evt.image_url.startsWith("http") ? evt.image_url : `http://localhost:8000${evt.image_url}`) : "/default_event.png"}
+                  alt={evt.title}
+                  className="event-image"
+                  onClick={() => handleViewParticipants(evt.id)}
+                  style={{ cursor: 'pointer' }}
+                />
+                <h3>{evt.title}</h3>
+                <p>{new Date(evt.date).toLocaleString()}</p>
+                <p>{evt.location}</p>
+                <p className="event-details">
+                  {evt.description.length > 100 ? evt.description.slice(0, 100) + '...' : evt.description}
+                </p>
+                <div className="card-actions">
+                  <button onClick={() => handleEdit(evt)}>Edit</button>
+                  <button onClick={() => handleDelete(evt.id)}>Delete</button>
+                </div>
               </div>
-            </div>
-          ))}
+            ))
+          ) : (
+            <div className="no-events-message">No events found. Click "ADD NEW EVENT" to create one.</div>
+          )}
         </div>
         <OfficerEventModal
           show={showEventModal}

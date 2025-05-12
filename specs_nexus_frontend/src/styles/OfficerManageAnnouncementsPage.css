@@ -1,98 +1,154 @@
 .officer-manage-announcements-page {
-    padding: 2rem;
-    background-color: #f9f9f9;
-    min-height: 100vh;
+  padding: 2rem;
+  background-color: #f9f9f9;
+  min-height: 100vh;
+}
+
+.announcements-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.announcements-header h1 {
+  color: #333;
+  margin: 0;
+}
+
+/* Add Announcement Button */
+.add-announcement-btn {
+  background-color: #28a745;
+  color: #fff;
+  padding: 0.75rem 1.5rem;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  font-size: 1rem;
+  font-weight: 600;
+  transition: all 0.2s ease-in-out;
+}
+
+.add-announcement-btn:hover {
+  background-color: #218838;
+  transform: translateY(-2px);
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.add-announcement-btn:active {
+  transform: translateY(0);
+}
+
+.announcements-grid {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}
+
+.announcement-card {
+  background: #fff;
+  border-radius: 8px;
+  width: 200px;
+  box-shadow: 0 2px 6px rgba(0,0,0,0.1);
+  padding: 1rem;
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.announcement-image {
+  width: 100%;
+  height: 120px;
+  object-fit: cover;
+  border-radius: 4px;
+  margin-bottom: 0.5rem;
+}
+
+.announcement-card h3 {
+  margin: 0 0 0.5rem;
+  font-size: 1rem;
+  color: #333;
+}
+
+.announcement-card p {
+  margin: 0.25rem 0;
+  font-size: 0.9rem;
+  color: #555;
+}
+
+.announcement-details {
+  margin-bottom: 0.5rem;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+}
+
+.card-actions button {
+  padding: 0.5rem;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+.card-actions button:first-child {
+  background-color: #ffc107; /* Edit - yellow */
+  color: #333;
+}
+
+.card-actions button:last-child {
+  background-color: #dc3545; /* Archive - red */
+  color: #fff;
+}
+
+.card-actions button:hover {
+  opacity: 0.9;
+}
+
+/* Loading State */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #3B4E38;
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.loading::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  margin: 20px auto;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: loading-spinner 1.2s linear infinite;
+}
+
+@keyframes loading-spinner {
+  0% {
+    transform: rotate(0deg);
   }
-  
-  .announcements-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    margin-bottom: 1rem;
+  100% {
+    transform: rotate(360deg);
   }
-  
-  .announcements-header h1 {
-    color: #333;
-    margin: 0;
-  }
-  
-  .add-announcement-btn {
-    background-color: #28a745;
-    color: #fff;
-    padding: 0.75rem 1rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .add-announcement-btn:hover {
-    background-color: #218838;
-  }
-  
-  .announcements-grid {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 1rem;
-  }
-  
-  .announcement-card {
-    background: #fff;
-    border-radius: 8px;
-    width: 200px;
-    box-shadow: 0 2px 6px rgba(0,0,0,0.1);
-    padding: 1rem;
-    display: flex;
-    flex-direction: column;
-    text-align: center;
-  }
-  
-  .announcement-image {
-    width: 100%;
-    height: 120px;
-    object-fit: cover;
-    border-radius: 4px;
-    margin-bottom: 0.5rem;
-  }
-  
-  .announcement-card h3 {
-    margin: 0 0 0.5rem;
-    font-size: 1rem;
-    color: #333;
-  }
-  
-  .announcement-card p {
-    margin: 0.25rem 0;
-    font-size: 0.9rem;
-    color: #555;
-  }
-  
-  .announcement-details {
-    margin-bottom: 0.5rem;
-  }
-  
-  .card-actions {
-    display: flex;
-    justify-content: space-between;
-  }
-  
-  .card-actions button {
-    padding: 0.5rem;
-    border: none;
-    border-radius: 4px;
-    cursor: pointer;
-  }
-  
-  .card-actions button:first-child {
-    background-color: #ffc107; /* Edit - yellow */
-    color: #333;
-  }
-  
-  .card-actions button:last-child {
-    background-color: #dc3545; /* Archive - red */
-    color: #fff;
-  }
-  
-  .card-actions button:hover {
-    opacity: 0.9;
-  }
-  
+}
+
+.no-announcements {
+  width: 100%;
+  text-align: center;
+  padding: 2rem;
+  color: #555;
+  font-size: 1.1rem;
+}

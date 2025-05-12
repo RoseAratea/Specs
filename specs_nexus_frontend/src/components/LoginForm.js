@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { login } from '../services/authService';
 
 const LoginForm = ({ onLoginSuccess }) => {
-  const [email, setemail] = useState('');
+  const [emailOrStudentNumber, setEmailOrStudentNumber] = useState('');
   const [password, setPassword] = useState('');
   const [error, setError] = useState('');
   const [isLoading, setIsLoading] = useState(false);
@@ -12,7 +12,7 @@ const LoginForm = ({ onLoginSuccess }) => {
     setError('');
     setIsLoading(true);
     try {
-      const response = await login({ email, password });
+      const response = await login({ emailOrStudentNumber, password });
       localStorage.setItem('accessToken', response.access_token);
       onLoginSuccess(response);
     } catch (err) {
@@ -28,11 +28,11 @@ const LoginForm = ({ onLoginSuccess }) => {
       <form onSubmit={handleSubmit}>
         <div>
           <input
-            id="email"
+            id="emailOrStudentNumber"
             type="text"
-            placeholder="Domain"
-            value={email}
-            onChange={(e) => setemail(e.target.value)}
+            placeholder="Email or Student Number"
+            value={emailOrStudentNumber}
+            onChange={(e) => setEmailOrStudentNumber(e.target.value)}
             required
           />
         </div>

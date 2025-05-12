@@ -1,12 +1,11 @@
 .officer-layout-container {
-    display: flex;
-    min-height: 100vh;
-    background-color: #f9f9f9;
-  }
-  
-  .officer-main-content {
-    flex: 1;
-    padding: 2rem;
-    overflow-y: auto;
-  }
-  
+  display: flex;
+  min-height: 100vh;
+  background-color: #f9f9f9;
+}
+
+.officer-main-content {
+  flex: 1;
+  padding: 2rem;
+  overflow-y: auto;
+}

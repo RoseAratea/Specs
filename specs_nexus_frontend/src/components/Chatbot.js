@@ -67,11 +67,19 @@ const Chatbot = () => {
           </div>
           <div className="chatbot-messages">
             {messages.map((msg, idx) => (
-              <div key={idx} className={`chat-message ${msg.sender}`}>
-                {msg.text}
+              <div key={idx} className={`chat-bubble-wrapper ${msg.sender}`}>
+                <div className="sender-name">{msg.sender === 'bot' ? 'ai' : 'USER'}</div>
+                <div className={`chat-bubble ${msg.sender}`}>
+                  {msg.text}
+                </div>
               </div>
             ))}
-            {loading && <div className="chat-message bot">Typing...</div>}
+            {loading && (
+              <div className="chat-bubble-wrapper bot">
+                <div className="sender-name">ai</div>
+                <div className="chat-bubble bot">Typing...</div>
+              </div>
+            )}
             <div ref={messagesEndRef} />
           </div>
           <div className="chatbot-input">

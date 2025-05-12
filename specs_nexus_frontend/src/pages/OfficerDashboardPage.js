@@ -11,31 +11,38 @@ import {
 const OfficerDashboardPage = () => {
   const [officer, setOfficer] = useState(null);
   const [analytics, setAnalytics] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
   const token = localStorage.getItem('officerAccessToken');
 
   useEffect(() => {
-    const storedOfficer = localStorage.getItem('officerInfo');
-    if (storedOfficer) {
-      setOfficer(JSON.parse(storedOfficer));
-    }
-  }, []);
-
-  useEffect(() => {
-    async function fetchAnalytics() {
+    async function fetchData() {
       try {
-        const data = await getDashboardAnalytics(token);
-        setAnalytics(data);
+        // Get officer info
+        const storedOfficer = localStorage.getItem('officerInfo');
+        const officerData = storedOfficer ? JSON.parse(storedOfficer) : null;
+        setOfficer(officerData);
+        
+        // Get analytics data
+        if (token) {
+          const analyticsData = await getDashboardAnalytics(token);
+          setAnalytics(analyticsData);
+        }
       } catch (error) {
-        console.error("Failed to fetch analytics:", error);
+        console.error("Failed to fetch data:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
-    if (token) {
-      fetchAnalytics();
-    }
+    
+    fetchData();
   }, [token]);
 
-  if (!officer || !analytics) {
+  if (isLoading) {
     return <div className="loading">Loading Officer Dashboard...</div>;
+  }
+
+  if (!officer || !analytics) {
+    return <div className="error-message">Unable to load dashboard data. Please try again later.</div>;
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA3399"];

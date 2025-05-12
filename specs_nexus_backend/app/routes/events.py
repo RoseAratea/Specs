@@ -1,7 +1,7 @@
 import logging
 from datetime import datetime
 import os
-from typing import List
+from typing import List, Optional
 
 from fastapi import APIRouter, Depends, HTTPException, UploadFile, File, Form
 from sqlalchemy.orm import Session
@@ -23,15 +23,20 @@ def get_db():
 
 # Endpoint: GET /events/
 # Description: Returns a list of all active (non-archived) events.
+# Update the get_events function to include is_participant flag
 @router.get("/", response_model=List[schemas.EventSchema])
-def get_events(db: Session = Depends(get_db)):
+def get_events(db: Session = Depends(get_db), current_user: models.User = Depends(get_current_user)):
     logger.debug("Fetching all active events")
     events = db.query(models.Event).filter(models.Event.archived == False).all()
+    
+    # Add is_participant flag to each event
+    for event in events:
+        # Check if current user is participating in this event
+        event.is_participant = any(participant.id == current_user.id for participant in event.participants)
+        
     logger.info(f"Fetched {len(events)} events")
     return events
 
-# Endpoint: POST /events/join/{event_id}
-# Description: Allows a user to join an event by event_id.
 @router.post("/join/{event_id}", response_model=schemas.MessageResponse)
 def join_event(
     event_id: int,
@@ -43,6 +48,17 @@ def join_event(
     if not event:
         logger.error(f"Event {event_id} not found")
         raise HTTPException(status_code=404, detail="Event not found")
+    
+    # Check if event registration is open
+    now = datetime.utcnow()
+    if event.registration_start and now < event.registration_start:
+        logger.error(f"Registration for event {event_id} has not started yet")
+        raise HTTPException(status_code=403, detail="Registration for this event has not started yet")
+    
+    if event.registration_end and now > event.registration_end:
+        logger.error(f"Registration for event {event_id} has ended")
+        raise HTTPException(status_code=403, detail="Registration for this event has ended")
+    
     user_in_session = db.merge(current_user)
     if any(user.id == user_in_session.id for user in event.participants):
         logger.info(f"User {user_in_session.id} already participating in event {event_id}")
@@ -65,6 +81,13 @@ def leave_event(
     if not event:
         logger.error(f"Event {event_id} not found")
         raise HTTPException(status_code=404, detail="Event not found")
+    
+    # Check if event registration is still open for leaving
+    now = datetime.utcnow()
+    if event.registration_end and now > event.registration_end:
+        logger.error(f"Registration for event {event_id} has ended, cannot leave")
+        raise HTTPException(status_code=403, detail="Registration for this event has ended, cannot leave now")
+    
     user_in_event = next((user for user in event.participants if user.id == current_user.id), None)
     if not user_in_event:
         logger.info(f"User {current_user.id} is not participating in event {event_id}")
@@ -96,6 +119,8 @@ async def admin_create_event(
     description: str = Form(...),
     date: datetime = Form(...),
     location: str = Form(""),
+    registration_start: Optional[datetime] = Form(None),
+    registration_end: Optional[datetime] = Form(None),
     image: UploadFile = File(None),
     db: Session = Depends(get_db),
     current_officer: models.Officer = Depends(get_current_officer)
@@ -112,12 +137,19 @@ async def admin_create_event(
             f.write(content)
         image_url = f"/static/event_images/{unique_name}"
         logger.debug(f"Uploaded event image: {image_url}")
+    
+    # Set default registration_start if not provided
+    if not registration_start:
+        registration_start = datetime.utcnow()
+    
     new_event = models.Event(
         title=title,
         description=description,
         date=date,
         image_url=image_url,
-        location=location
+        location=location,
+        registration_start=registration_start,
+        registration_end=registration_end
     )
     db.add(new_event)
     db.commit()
@@ -134,6 +166,8 @@ async def admin_update_event(
     description: str = Form(...),
     date: datetime = Form(...),
     location: str = Form(""),
+    registration_start: Optional[datetime] = Form(None),
+    registration_end: Optional[datetime] = Form(None),
     image: UploadFile = File(None),
     db: Session = Depends(get_db),
     current_officer: models.Officer = Depends(get_current_officer)
@@ -157,6 +191,13 @@ async def admin_update_event(
     event.description = description
     event.date = date
     event.location = location
+    
+    # Update registration dates if provided
+    if registration_start:
+        event.registration_start = registration_start
+    if registration_end:
+        event.registration_end = registration_end
+        
     db.commit()
     db.refresh(event)
     logger.info(f"Officer {current_officer.id} updated event {event_id} successfully")

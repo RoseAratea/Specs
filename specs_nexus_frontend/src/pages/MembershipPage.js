@@ -3,12 +3,16 @@ import { getProfile } from '../services/userService';
 import { getMemberships } from '../services/membershipService';
 import Sidebar from '../components/Sidebar';
 import MembershipModal from '../components/MembershipModal';
+import { FaBars } from 'react-icons/fa';
 import '../styles/MembershipPage.css';
 
 const MembershipPage = () => {
   const [user, setUser] = useState(null);
   const [memberships, setMemberships] = useState([]);
   const [selectedMembership, setSelectedMembership] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
+  const [loadingMemberships, setLoadingMemberships] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // ✅ Sidebar toggle
   const token = localStorage.getItem('accessToken');
 
   useEffect(() => {
@@ -18,6 +22,8 @@ const MembershipPage = () => {
         setUser(userData);
       } catch (error) {
         console.error("Failed to fetch profile:", error);
+      } finally {
+        setIsLoading(false);
       }
     }
     fetchProfile();
@@ -27,10 +33,13 @@ const MembershipPage = () => {
     if (user) {
       async function fetchMemberships() {
         try {
+          setLoadingMemberships(true);
           const membershipsData = await getMemberships(user.id, token);
           setMemberships(membershipsData);
         } catch (error) {
           console.error("Failed to fetch membership info:", error);
+        } finally {
+          setLoadingMemberships(false);
         }
       }
       fetchMemberships();
@@ -64,28 +73,51 @@ const MembershipPage = () => {
     return { progressPercentage, progressColor, displayStatus: status };
   };
 
+  if (isLoading) {
+    return <div className="loading">Loading Membership Information...</div>;
+  }
+
   if (!user) {
-    return <div>Loading...</div>;
+    return <div className="error-message">Unable to load user data. Please try again later.</div>;
   }
 
   const notPaidMemberships = memberships.filter(
     (m) => m.payment_status?.trim().toLowerCase() !== "paid"
   );
+
   const paidMemberships = memberships.filter(
     (m) => m.payment_status?.trim().toLowerCase() === "paid"
   );
-
+  const today = new Date();
+  const formattedDate = today.toLocaleString('en-US', {
+    weekday: 'long',
+    month: 'long',
+    day: 'numeric',
+    year: 'numeric',
+    hour: '2-digit',
+    minute: '2-digit'
+  });
   return (
-    <div className="layout-container">
-      <Sidebar user={user} />
+    <div className={`layout-container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+      <Sidebar user={user} isOpen={isSidebarOpen} />
       <div className="main-content">
         <div className="dashboard-header">
-          <h1>My Membership Requirements</h1>
+          <div className="dashboard-left">
+            <button className="sidebar-toggle-inside" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+              <FaBars />
+            </button>
+            <h1>My Membership Requirements</h1>
+          </div>
         </div>
 
+        {/* Unpaid or Verifying Section */}
         <div className="membership-section">
           <h2>Unpaid / Verifying Memberships</h2>
-          {notPaidMemberships.length > 0 ? (
+          {loadingMemberships ? (
+            <div className="membership-loading">
+              <div className="loading-indicator">Loading membership data...</div>
+            </div>
+          ) : notPaidMemberships.length > 0 ? (
             <div className="memberships-grid">
               {notPaidMemberships.map((membership) => {
                 const status = membership.payment_status || "";
@@ -105,20 +137,12 @@ const MembershipPage = () => {
                       <p><strong>Amount:</strong> ₱{membership.amount || "0"}</p>
                       <p><strong>Membership ID:</strong> {membership.id}</p>
                     </div>
-                    {status.trim().toLowerCase() === "not paid" && (
+                    {(status.trim().toLowerCase() === "not paid" || status.trim().toLowerCase() === "verifying") && (
                       <button
-                        className="register-btn"
+                        className={status.trim().toLowerCase() === "not paid" ? "register-btn" : "edit-btn"}
                         onClick={() => setSelectedMembership(membership)}
                       >
-                        Register Membership
-                      </button>
-                    )}
-                    {status.trim().toLowerCase() === "verifying" && (
-                      <button
-                        className="edit-btn"
-                        onClick={() => setSelectedMembership(membership)}
-                      >
-                        Edit Uploaded Files
+                        {status.trim().toLowerCase() === "not paid" ? "Register Membership" : "Edit Uploaded Files"}
                       </button>
                     )}
                   </div>
@@ -130,9 +154,14 @@ const MembershipPage = () => {
           )}
         </div>
 
+        {/* Paid Section */}
         <div className="membership-section">
           <h2>Paid Memberships</h2>
-          {paidMemberships.length > 0 ? (
+          {loadingMemberships ? (
+            <div className="membership-loading">
+              <div className="loading-indicator">Loading membership data...</div>
+            </div>
+          ) : paidMemberships.length > 0 ? (
             <div className="memberships-grid">
               {paidMemberships.map((membership) => {
                 const { progressPercentage, progressColor, displayStatus } = getProgressData(membership.payment_status);

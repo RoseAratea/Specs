@@ -7,7 +7,6 @@
   border-left: 5px solid #4caf50;
 }
 
-
 /* Membership Grid */
 .memberships-grid {
   display: grid;
@@ -73,7 +72,7 @@
 }
 
 .register-btn:hover {
-  background-color: #e68900;
+  background-color:#e68900;
 }
 
 .edit-btn {
@@ -83,6 +82,93 @@
 
 .edit-btn:hover {
   background-color: #1976d2;
+}
+
+/* Fixed Loading Animation - Full Screen */
+.loading {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  width: 100%;
+  position: fixed;
+  top: 0;
+  left: 0;
+  background-color: #3B4E38;
+  z-index: 1000;
+  transition: opacity 0.3s ease-in-out;
+  font-size: 1.5rem;
+  font-weight: 500;
+  color: #fff;
+}
+
+.loading::after {
+  content: "";
+  width: 50px;
+  height: 50px;
+  margin: 20px auto;
+  border-radius: 50%;
+  border: 6px solid #fff;
+  border-color: #fff transparent #fff transparent;
+  animation: loading-spinner 1.2s linear infinite;
+}
+
+@keyframes loading-spinner {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
+}
+
+/* Error message styling */
+.error-message {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 200px;
+  background-color: #fff3f3;
+  border-left: 4px solid #ff4d4d;
+  color: #d32f2f;
+  font-size: 1.25rem;
+  padding: 2rem;
+  border-radius: 0.5rem;
+  margin: 2rem auto;
+  max-width: 600px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+}
+
+/* Membership Loading Container */
+.membership-loading {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 150px;
+  width: 100%;
+  padding: 2rem;
+}
+
+/* Loading Indicator for membership section */
+.loading-indicator {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  color: #555;
+  font-size: 1rem;
+}
+
+.loading-indicator::after {
+  content: "";
+  width: 40px;
+  height: 40px;
+  margin: 15px auto;
+  border-radius: 50%;
+  border: 4px solid #e0e0e0;
+  border-color: #4caf50 transparent #4caf50 transparent;
+  animation: loading-spinner 1.2s linear infinite;
 }
 
 /* Responsive */
