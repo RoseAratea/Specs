@@ -88,15 +88,7 @@ const MembershipPage = () => {
   const paidMemberships = memberships.filter(
     (m) => m.payment_status?.trim().toLowerCase() === "paid"
   );
-  const today = new Date();
-  const formattedDate = today.toLocaleString('en-US', {
-    weekday: 'long',
-    month: 'long',
-    day: 'numeric',
-    year: 'numeric',
-    hour: '2-digit',
-    minute: '2-digit'
-  });
+  
   return (
     <div className={`layout-container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
       <Sidebar user={user} isOpen={isSidebarOpen} />

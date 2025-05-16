@@ -247,3 +247,76 @@ html, body {
   transform: scale(1.05); 
   box-shadow: 0 6px 8px rgba(0, 0, 0, 0.3); 
 }
+@media (max-width: 768px) {
+  .site-header {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 12px 20px;
+  }
+
+  .header-title {
+    font-size: 1.6rem;
+    margin-top: 8px;
+  }
+
+  .login-button {
+    width: 100%;
+    padding: 10px;
+    margin-top: 10px;
+    font-size: 1rem;
+  }
+
+  .container {
+    flex-direction: column;
+    align-items: center;
+    padding: 1rem;
+    height: auto;
+    overflow-y: auto;
+  }
+
+  .left-section {
+    width: 100%;
+    align-items: center;
+    text-align: center;
+  }
+
+  .acronym {
+    font-size: 2rem;
+    line-height: 3rem;
+  }
+
+  .right-section {
+    display: none; /* hide decorative image on mobile */
+  }
+
+  .modal-content {
+    width: 90%;
+    padding: 25px 20px;
+  }
+
+  .welcome-title {
+    font-size: 1.8rem;
+  }
+
+  .modal-content input {
+    font-size: 0.9rem;
+  }
+
+  .modal-content button.modal-login-button {
+    width: 100%;
+    font-size: 1rem;
+  }
+
+  .seals {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+
+
+  .seals img {
+    margin: 5px;
+    width: 50px;
+  }
+}

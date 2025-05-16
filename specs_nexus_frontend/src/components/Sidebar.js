@@ -15,7 +15,8 @@ const Sidebar = ({ user, isOpen, closeSidebar }) => {
 
   return (
     <div className={`sidebar ${isOpen ? 'open' : ''}`}>
-
+      <div class="profile-container">
+  <i class="fas fa-user-circle profile-icon"></i></div>
       <div className="user-info">
         <h3>{user.full_name || "User Name"}</h3>
         <p>{user.student_number || "Student Number"}</p>

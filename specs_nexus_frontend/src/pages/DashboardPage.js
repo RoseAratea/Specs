@@ -75,8 +75,10 @@ const DashboardPage = () => {
         <div className="about-us">
           <h2>About Us</h2>
           <p>
-            The Society of Programming Enthusiasts in Computer Science (SPECS) aims to promote skills,
-            knowledge, and camaraderie among CS students at Gordon College.
+            The Society of Programming Enthusiasts in Computer Science (SPECS) is one of the three 
+            recognized organizations under the College of Computer Studies and the only organization 
+            under the Computer Science course. We aim to promote the skills, knowledge, and camaraderie 
+            among CS Students of Gordon College and establish leadership among the SPECS Officers and CS Students.
           </p>
         </div>
 
@@ -88,14 +90,22 @@ const DashboardPage = () => {
                 <div className="loading-indicator">Loading clearance data...</div>
               </div>
             ) : clearanceData.length > 0 ? (
-              <div className="clearance-grid">
-                {clearanceData.map((clearance) => (
-                  <div key={clearance.id} className="clearance-card">
-                    <p><strong>Requirement:</strong> {clearance.requirement}</p>
-                    <p><strong>Status:</strong> {clearance.status}</p>
-                  </div>
-                ))}
-              </div>
+              <table className="clearance-table">
+                <thead>
+                  <tr>
+                    <th>Requirement</th>
+                    <th>Status</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  {clearanceData.map((clearance) => (
+                    <tr key={clearance.id}>
+                      <td>{clearance.requirement}</td>
+                      <td>{clearance.status}</td>
+                    </tr>
+                  ))}
+                </tbody>
+              </table>
             ) : (
               <p>No clearance records found.</p>
             )}

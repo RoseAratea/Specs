@@ -5,6 +5,7 @@
   background-color: #3B4E38;
   padding: 2rem;
   gap: 2rem;
+  flex-wrap: wrap; /* Allow wrapping for better responsiveness */
 }
 
 /* Main Content Area */
@@ -21,14 +22,21 @@
   max-width: 100%;
 }
 
-/* Title */
 .dashboard-title {
-  font-size: 2.25rem;
-  font-weight: 700;
-  color: #2e2e2e;
-  text-align: center;
-  margin-bottom: 2rem;
+  display: flex;
+  align-items: center;
+  font-size: 1.75rem;
+  gap: 10px;
 }
+
+.sidebar-toggle-inside {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  margin-right: 8px;
+}
+
 
 /* Analytics Card */
 .card {
@@ -197,6 +205,27 @@
   }
 
   .card {
+    padding: 1.5rem;
+  }
+
+  /* Adjust dashboard header for mobile */
+  .dashboard-header h1 {
+    font-size: 1.75rem;
+  }
+  
+  /* Make the error message more mobile-friendly */
+  .error-message {
+    max-width: 90%;
+    font-size: 1.1rem;
+    padding: 1.5rem;
+  }
+
+  .stat-box h2 {
+    font-size: 1.75rem;
+  }
+  
+  /* Mobile optimizations for charts */
+  .chart-box {
     padding: 1.5rem;
   }
 }

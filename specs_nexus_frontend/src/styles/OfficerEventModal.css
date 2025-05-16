@@ -14,8 +14,9 @@
 .officer-modal-container {
   background: #fff;
   border-radius: 16px;
-  width: 500px; /* fixed for large screen */
-  max-height: 80vh; /* compact height */
+  width: 100%;
+  max-width: 350px;
+  max-height: 85vh;
   padding: 1.5rem;
   position: relative;
   box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
@@ -23,6 +24,7 @@
   animation: slideUp 0.3s ease-out;
 }
 
+/* Entrance Animation */
 @keyframes slideUp {
   from {
     opacity: 0;
@@ -52,37 +54,38 @@
 
 /* Header */
 .officer-modal-header h2 {
-  font-size: 1.4rem;
+  font-size: 1.5rem;
   font-weight: 600;
   margin-bottom: 1rem;
   text-align: center;
-  color: #333;
+  color: #222;
 }
 
-/* Form */
+/* Form Layout */
 .officer-event-form {
   display: flex;
   flex-direction: column;
-  gap: 0.75rem;
+  gap: 1rem;
 }
 
 .officer-event-form label {
   font-weight: 600;
   font-size: 0.95rem;
-  color: #444;
+  color: #333;
 }
 
 .officer-event-form input,
 .officer-event-form textarea {
-  padding: 0.6rem;
+  padding: 0.6rem 0.75rem;
   border-radius: 8px;
   border: 1px solid #ccc;
-  font-size: 0.9rem;
+  font-size: 0.95rem;
   background-color: #f9f9f9;
+  transition: border 0.2s, background-color 0.2s;
 }
 
 .officer-event-form textarea {
-  min-height: 80px;
+  min-height: 90px;
   resize: vertical;
 }
 
@@ -93,16 +96,18 @@
   background-color: #fff;
 }
 
-/* Button */
+/* Submit Button */
 .officer-event-form button[type="submit"] {
   margin-top: 1rem;
-  padding: 0.7rem;
+  padding: 0.75rem;
   background: linear-gradient(135deg, #007bff, #0056b3);
   color: #fff;
   font-weight: 600;
+  font-size: 1rem;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  transition: background 0.3s;
 }
 
 .officer-event-form button[type="submit"]:hover {
@@ -111,7 +116,7 @@
 
 /* Image Preview */
 .image-preview {
-  height: 150px;
+  height: 160px;
   border-radius: 8px;
   background-color: #f3f3f3;
   display: flex;
@@ -130,10 +135,13 @@
 .blank-image {
   color: #aaa;
   font-size: 0.9rem;
+  text-align: center;
 }
+
+/* Responsive Enhancements */
 @media screen and (min-width: 1920px) and (min-height: 1080px) {
   .officer-modal-container {
-    width: 600px;
-    max-height: 70vh;
+    max-width: 600px;
+    max-height: 75vh;
   }
 }

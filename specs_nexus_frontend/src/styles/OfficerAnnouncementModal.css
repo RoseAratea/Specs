@@ -1,56 +1,88 @@
+/* Modal Overlay */
 .officer-announcement-modal-overlay {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: rgba(0,0,0,0.5);
+  background-color: rgba(0, 0, 0, 0.5); /* Semi-transparent black background */
   display: flex;
   justify-content: center;
   align-items: center;
   z-index: 999;
 }
 
+/* Modal Container */
 .officer-announcement-modal-container {
   background: #fff;
   border-radius: 8px;
   width: 90%;
-  max-width: 500px;
+  max-width: 600px; /* Increased max-width for larger screens */
   padding: 2rem;
   position: relative;
-  box-shadow: 0 2px 8px rgba(0,0,0,0.2);
+  box-shadow: 0 2px 15px rgba(0, 0, 0, 0.1); /* Added more shadow for depth */
+  overflow: hidden;
+  transition: transform 0.3s ease-in-out; /* Smooth modal appearance */
 }
 
+/* Close Button */
 .officer-announcement-modal-close {
   position: absolute;
   top: 1rem;
   right: 1rem;
   background: none;
   border: none;
-  font-size: 1.25rem;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #333;
   cursor: pointer;
+  transition: color 0.2s ease-in-out;
 }
 
+.officer-announcement-modal-close:hover {
+  color: #d9534f; /* Red color on hover */
+}
+
+/* Modal Header */
 .officer-announcement-modal-header h2 {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  font-size: 1.75rem;
+  color: #333;
+  font-weight: 600;
+  text-align: center; /* Centered header text */
 }
 
+/* Form Styling */
 .officer-announcement-form {
   display: flex;
   flex-direction: column;
+  gap: 1rem; /* Added gap between form elements */
 }
 
 .officer-announcement-form label {
-  margin-bottom: 0.5rem;
   font-weight: bold;
+  color: #555;
 }
 
 .officer-announcement-form input,
 .officer-announcement-form textarea {
-  margin-bottom: 1rem;
-  padding: 0.5rem;
-  border-radius: 4px;
+  padding: 0.75rem; /* Increased padding for better input areas */
+  border-radius: 5px;
   border: 1px solid #ccc;
+  font-size: 1rem;
+  color: #333;
+  transition: border-color 0.2s ease-in-out;
+}
+
+.officer-announcement-form input:focus,
+.officer-announcement-form textarea:focus {
+  border-color: #007bff; /* Focus border color */
+  outline: none;
+}
+
+.officer-announcement-form textarea {
+  resize: vertical; /* Allow vertical resizing of textarea */
+  min-height: 100px;
 }
 
 .officer-announcement-form button[type="submit"] {
@@ -59,32 +91,65 @@
   color: #fff;
   border: none;
   border-radius: 4px;
+  font-size: 1rem;
   cursor: pointer;
+  transition: background-color 0.3s ease;
 }
 
 .officer-announcement-form button[type="submit"]:hover {
   background-color: #0056b3;
 }
 
+/* Image Preview Section */
 .image-preview {
-  margin-bottom: 1rem;
+  margin-bottom: 1.5rem;
+  display: flex;
+  justify-content: center;
 }
 
 .blank-image {
   width: 100%;
-  height: 100px;
+  height: 150px; /* Slightly taller blank image area */
   background-color: #f0f0f0;
   border-radius: 4px;
   display: flex;
   align-items: center;
   justify-content: center;
   color: #aaa;
+  font-size: 1rem;
 }
 
-/* New styling for the preview image to ensure it fits the modal */
+/* Preview Image */
 .preview-image {
   width: 100%;
-  max-height: 200px;
+  max-height: 250px; /* Increased max height */
   object-fit: contain;
   border-radius: 4px;
+  border: 1px solid #ddd; /* Added border to image */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Subtle shadow for the image */
+  margin-bottom: 1rem;
+}
+
+/* Responsive Design for Smaller Screens */
+@media (max-width: 768px) {
+  .officer-announcement-modal-container {
+    width: 95%; /* Increase modal width on smaller screens */
+    padding: 1.5rem; /* Reduce padding */
+  }
+
+  .officer-announcement-modal-header h2 {
+    font-size: 1.5rem; /* Reduce font size for the header on small screens */
+  }
+
+  .officer-announcement-form button[type="submit"] {
+    font-size: 0.875rem; /* Smaller button text on small screens */
+  }
+
+  .blank-image {
+    height: 120px; /* Adjust height for smaller screens */
+  }
+
+  .preview-image {
+    max-height: 200px; /* Adjust preview image size */
+  }
 }

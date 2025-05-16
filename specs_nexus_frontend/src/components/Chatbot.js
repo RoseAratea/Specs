@@ -57,18 +57,21 @@ const Chatbot = () => {
   return (
     <>
       <div className="chatbot-button" onClick={toggleChat}>
-        <span>Chat</span>
+        <i className="fas fa-robot"></i>
       </div>
       {isOpen && (
         <div className="chatbot-container">
           <div className="chatbot-header">
-            <h3>SPECS Assistance</h3>
+            <div>
+              <span className="specs-text">SPECS</span>
+              <span className="assistance-text"> Assistance</span>
+            </div>
             <button className="close-button" onClick={toggleChat}>×</button>
           </div>
           <div className="chatbot-messages">
             {messages.map((msg, idx) => (
               <div key={idx} className={`chat-bubble-wrapper ${msg.sender}`}>
-                <div className="sender-name">{msg.sender === 'bot' ? 'ai' : 'USER'}</div>
+                <div className="sender-name">{msg.sender === 'bot' ? 'ai' : 'Student'}</div>
                 <div className={`chat-bubble ${msg.sender}`}>
                   {msg.text}
                 </div>

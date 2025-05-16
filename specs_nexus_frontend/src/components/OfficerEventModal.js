@@ -20,7 +20,7 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
       setRegistrationStart(initialEvent.registration_start ? initialEvent.registration_start.slice(0, 16) : '');
       setRegistrationEnd(initialEvent.registration_end ? initialEvent.registration_end.slice(0, 16) : '');
       setImageFile(null);
-      setPreviewUrl(''); 
+      setPreviewUrl('');
     } else {
       setTitle('');
       setDetails('');
@@ -51,20 +51,45 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+
+    const now = new Date();
+
+    if (!registrationStart || !registrationEnd) {
+      alert("Both registration start and end times are required.");
+      return;
+    }
+
+    const start = new Date(registrationStart);
+    const end = new Date(registrationEnd);
+    const eventDate = new Date(dateTime);
+
+    if (start < now || end < now) {
+      alert("Registration times must not be in the past.");
+      return;
+    }
+
+    if (start >= end) {
+      alert("Registration end time must be after start time.");
+      return;
+    }
+
+    if (eventDate < now) {
+      alert("The event must be scheduled for a future date and time.");
+      return;
+    }
+
     const formData = new FormData();
     formData.append('title', title);
     formData.append('description', details);
-    formData.append('date', new Date(dateTime).toISOString());
+    formData.append('date', eventDate.toISOString());
     formData.append('location', location);
-    if (registrationStart) {
-      formData.append('registration_start', new Date(registrationStart).toISOString());
-    }
-    if (registrationEnd) {
-      formData.append('registration_end', new Date(registrationEnd).toISOString());
-    }
+    formData.append('registration_start', start.toISOString());
+    formData.append('registration_end', end.toISOString());
+
     if (imageFile) {
       formData.append('image', imageFile);
     }
+
     onSave(formData, initialEvent?.id);
   };
 
@@ -72,10 +97,13 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
     <div className="officer-modal-overlay">
       <div className="officer-modal-container">
         <button className="officer-modal-close" onClick={onClose}>×</button>
+
         <div className="officer-modal-header">
           <h2>{initialEvent ? 'Edit Event' : 'Add New Event'}</h2>
         </div>
+
         <form onSubmit={handleSubmit} className="officer-event-form">
+          {/* Image Preview */}
           <div className="image-preview">
             {previewUrl ? (
               <img src={previewUrl} alt="Preview" className="preview-image" />
@@ -83,55 +111,63 @@ const OfficerEventModal = ({ show, onClose, onSave, initialEvent }) => {
               <div className="blank-image">No image selected</div>
             )}
           </div>
-          <label>Title:</label>
+
+          <label htmlFor="title">Title</label>
           <input
+            id="title"
             type="text"
             value={title}
             onChange={(e) => setTitle(e.target.value)}
             required
           />
 
-          <label>Details:</label>
+          <label htmlFor="details">Details</label>
           <textarea
+            id="details"
             value={details}
             onChange={(e) => setDetails(e.target.value)}
             required
           />
 
-          <label>Date and time:</label>
+          <label htmlFor="dateTime">Event Date and Time</label>
           <input
+            id="dateTime"
             type="datetime-local"
             value={dateTime}
             onChange={(e) => setDateTime(e.target.value)}
             required
           />
 
-          <label>Location:</label>
+          <label htmlFor="location">Location</label>
           <input
+            id="location"
             type="text"
             value={location}
             onChange={(e) => setLocation(e.target.value)}
             required
           />
 
-          <label>Registration Start:</label>
+          <label htmlFor="registrationStart">Registration Start</label>
           <input
+            id="registrationStart"
             type="datetime-local"
             value={registrationStart}
             onChange={(e) => setRegistrationStart(e.target.value)}
-            placeholder="Leave empty for immediate registration"
+            required
           />
 
-          <label>Registration End:</label>
+          <label htmlFor="registrationEnd">Registration End</label>
           <input
+            id="registrationEnd"
             type="datetime-local"
             value={registrationEnd}
             onChange={(e) => setRegistrationEnd(e.target.value)}
-            placeholder="Leave empty for no deadline"
+            required
           />
 
-          <label>Image:</label>
+          <label htmlFor="image">Image</label>
           <input
+            id="image"
             type="file"
             accept="image/*"
             onChange={handleFileChange}

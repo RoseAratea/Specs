@@ -1,29 +1,51 @@
+/* Import Poppins font */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600&display=swap');
+
+/* Import Font Awesome */
+@import url('https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css');
+
 .chatbot-button {
   position: fixed;
   bottom: 20px;
   right: 20px;
-  background: linear-gradient(135deg, #6c63ff, #48c6ef);
+  background: linear-gradient(135deg, #253f21, #82ca78);
   color: white;
   border-radius: 50%;
-  width: 60px;
-  height: 60px;
+  width: 90px;     /* Increased from 60px */
+  height: 90px;    /* Increased from 60px */
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 20px;
+  font-size: 32px; /* Increased from 28px */
   cursor: pointer;
   box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
   z-index: 1000;
+  transition: transform 0.3s ease;
+}
+
+.chatbot-button i.fas.fa-robot {
+  font-size: 40px; /* Increased from default size */
+  color: white;
+  transition: transform 0.3s ease;
+}
+
+.chatbot-button:hover {
+  transform: scale(1.1);
+}
+
+.chatbot-button:hover i.fas.fa-robot {
+  transform: scale(1.1);
 }
 
 .chatbot-container {
+  font-family: 'Poppins', sans-serif;
   position: fixed;
   bottom: 90px;
   right: 20px;
-  width: 360px;
-  height: 540px; /* Fixed height */
-  background: #1e1e1e;
-  color: #fff;
+  width: 360px;    /* Decreased from 420px */
+  height: 430px;   /* Decreased from 650px */
+  background: #ffffff;
+  color: #333;
   border-radius: 18px;
   box-shadow: 0 12px 30px rgba(0, 0, 0, 0.2);
   display: flex;
@@ -33,14 +55,21 @@
 }
 
 .chatbot-header {
-  background: #333;
+  font-family: 'Poppins';
+  font-weight: 900; /* Changed from 600 to 700 for bolder text */
+  background: #253f21;
   color: white;
   padding: 16px 20px;
   font-size: 18px;
-  font-weight: bold;
   display: flex;
   justify-content: space-between;
   align-items: center;
+}
+
+/* Add new style for the "Assistance" text */
+.chatbot-header .assistance-text {
+  color: #fd8443; /* Orange color */
+  font-weight: 50px;
 }
 
 .close-button {
@@ -49,14 +78,29 @@
   color: white;
   font-size: 24px;
   cursor: pointer;
+  padding: 8px;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  transition: background-color 0.2s ease;
+  position: relative; /* Added for precise positioning */
+  top: 2px; /* Fine-tune vertical position */
+}
+
+.close-button:hover {
+  background-color: #47604311;
 }
 
 .chatbot-messages {
   flex: 1;
-  padding: 20px 14px;
+  padding: 15px 12px; /* Reduced padding */
   overflow-y: auto;
-  background-color: #1e1e1e;
-  max-height: 400px; /* Locks the message area height */
+  background: linear-gradient(135deg, #30552a, #82ca78);
+  max-height: calc(100% - 100px); /* Adjusted calculation */
+  margin-bottom: 50px; /* Reduced margin */
 }
 
 /* Chat message wrapper with name label */
@@ -76,7 +120,7 @@
 
 .sender-name {
   font-size: 12px;
-  color: #bbb;
+  color: #d4d4d4;
   margin-bottom: 2px;
   text-transform: lowercase;
   padding-left: 10px;
@@ -84,6 +128,8 @@
 
 /* Chat bubbles */
 .chat-bubble {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
   padding: 12px 16px;
   border-radius: 20px;
   max-width: 75%;
@@ -93,29 +139,35 @@
 }
 
 .chat-bubble.user {
-  background: #f0f0f0;
+  background: #ffffff;
   color: #000;
   border-bottom-right-radius: 4px;
 }
 
 .chat-bubble.bot {
-  background: #2a2a2a;
-  color: #fff;
+  background: #ffffff;
+  color: #000000;
   border-bottom-left-radius: 4px;
 }
 
 .chatbot-input {
   display: flex;
-  border-top: 1px solid #333;
-  padding: 12px;
-  background-color: #292929;
+  padding: 10px;
+  background-color: #e5ffe1;
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  right: 0;
+  border-top: 1px solid #aaa;
 }
 
 .chatbot-input input {
+  font-family: 'Poppins', sans-serif;
+  font-weight: 400;
   flex: 1;
   border: none;
-  background: #1e1e1e;
-  color: #fff;
+  background: #ffffff;
+  color: #000000;
   padding: 10px;
   font-size: 14px;
   border-radius: 8px;
@@ -123,7 +175,9 @@
 }
 
 .chatbot-input button {
-  background: #6c63ff;
+  font-family: 'Poppins', sans-serif;
+  font-weight: 500;
+  background: #3e6939;
   color: white;
   border: none;
   padding: 8px 14px;
@@ -134,5 +188,5 @@
 }
 
 .chatbot-input button:hover {
-  background: #574b90;
+  background: #253f21;
 }

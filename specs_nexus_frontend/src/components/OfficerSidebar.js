@@ -1,60 +1,54 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
-import {
-  FaTachometerAlt,
-  FaCalendarAlt,
-  FaBullhorn,
-  FaUsers,
-  FaTools,
-  FaSignOutAlt
-} from 'react-icons/fa';
+import { FaTachometerAlt, FaCalendarAlt, FaBullhorn, FaUsers, FaTools, FaSignOutAlt } from 'react-icons/fa';  
 import '../styles/OfficerSidebar.css';
 
-const OfficerSidebar = ({ officer: officerProp }) => {
-  const [officer, setOfficer] = useState(officerProp || {});
+const OfficerSidebar = ({ officer, isSidebarOpen, setIsSidebarOpen }) => {
   const navigate = useNavigate();
-
-  useEffect(() => {
-    if (!officerProp) {
-      const storedOfficer = localStorage.getItem('officerInfo');
-      if (storedOfficer) {
-        setOfficer(JSON.parse(storedOfficer));
-      }
-    }
-  }, [officerProp]);
-
-  const officerName = officer.full_name || "Officer Name";
-  const officerPosition = officer.position || "Officer Position";
 
   const handleLogout = () => {
     if (window.confirm("Are you sure you want to logout?")) {
+      // Clear officer-related data from localStorage
       localStorage.removeItem('officerAccessToken');
       localStorage.removeItem('officerInfo');
       navigate('/officer-login');
     }
   };
 
+  const toggleSidebar = () => {
+    setIsSidebarOpen(!isSidebarOpen); // Toggle sidebar visibility
+  };
+
   return (
-    <div className="sidebar">
+    <div className={`sidebar ${isSidebarOpen ? 'open' : 'closed'}`}> {/* Sidebar visibility controlled via props */}
       <div className="user-info">
-        <h3>{officerName}</h3>
-        <p>{officerPosition}</p>
+        <div class="profile-container">
+  <i class="fas fa-user-circle profile-icon"></i></div>
+        <h3>{officer.full_name || "Officer Name"}</h3>
+        <p>{officer.position || "Officer Position"}</p>
       </div>
       <nav>
         <ul>
+          {/* Officer Dashboard */}
           <li><Link to="/officer-dashboard"><FaTachometerAlt /> Dashboard</Link></li>
+          
+          {/* Officer-specific management options */}
           <li><Link to="/officer-manage-events"><FaCalendarAlt /> Manage Events</Link></li>
           <li><Link to="/officer-manage-announcements"><FaBullhorn /> Manage Announcements</Link></li>
           <li><Link to="/officer-manage-membership"><FaUsers /> Manage Membership</Link></li>
+          
+          {/* Admin-only section */}
           {officer.position?.toLowerCase() === 'admin' && (
-            <li><Link to="/admin-manage-officers"><FaTools /> Manage Officers</Link></li>
-          )}
+  <li><Link to="/admin-manage-officers"><FaTools /> Manage Officers</Link></li>
+)}
+
         </ul>
       </nav>
       <button className="logout-btn" onClick={handleLogout}>
         <FaSignOutAlt style={{ marginRight: '8px' }} />
         Logout
       </button>
+
     </div>
   );
 };

@@ -1,28 +1,28 @@
 import React, { useEffect, useState } from 'react'; 
 import OfficerSidebar from '../components/OfficerSidebar';
 import { getDashboardAnalytics } from '../services/analyticsService';
-import '../styles/OfficerDashboardPage.css'; // you can rename it to OfficerDashboard.css for consistency
+import '../styles/OfficerDashboardPage.css';
 import {
   BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, Legend,
   PieChart, Pie, Cell,
   ResponsiveContainer
 } from 'recharts';
+import { FaBars } from 'react-icons/fa'; // Sidebar toggle icon
 
 const OfficerDashboardPage = () => {
   const [officer, setOfficer] = useState(null);
   const [analytics, setAnalytics] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true); // Sidebar state
   const token = localStorage.getItem('officerAccessToken');
 
   useEffect(() => {
     async function fetchData() {
       try {
-        // Get officer info
         const storedOfficer = localStorage.getItem('officerInfo');
         const officerData = storedOfficer ? JSON.parse(storedOfficer) : null;
         setOfficer(officerData);
         
-        // Get analytics data
         if (token) {
           const analyticsData = await getDashboardAnalytics(token);
           setAnalytics(analyticsData);
@@ -46,7 +46,6 @@ const OfficerDashboardPage = () => {
   }
 
   const COLORS = ["#0088FE", "#00C49F", "#FFBB28", "#FF8042", "#AA3399"];
-
   const membershipInsights = analytics.membershipInsights;
   const membersByRequirementData = Object.entries(membershipInsights.membersByRequirement || {}).map(
     ([requirement, count]) => ({ requirement, count })
@@ -54,7 +53,8 @@ const OfficerDashboardPage = () => {
 
   const paymentAnalytics = analytics.paymentAnalytics;
   const preferredPaymentData = paymentAnalytics.preferredPaymentMethods || [];
-
+  
+  // Transforming payment details data
   const transformPaymentDetails = (data) => {
     let arr = [];
     Object.entries(data).forEach(([requirement, years]) => {
@@ -90,14 +90,23 @@ const OfficerDashboardPage = () => {
   );
 
   return (
-    <div className="layout-container">
-    <OfficerSidebar officer={officer} />
-    <div className="main-content">
-      <div className="dashboard-header">
-        <h1>Officer Dashboard</h1>
-      </div>
+    <div className={`layout-container ${isSidebarOpen ? 'sidebar-open' : ''}`}>
+      {/* Pass the sidebar state and toggle function to OfficerSidebar */}
+      <OfficerSidebar officer={officer} isSidebarOpen={isSidebarOpen} setIsSidebarOpen={setIsSidebarOpen} />
+      <div className="main-content">
+        <div className="dashboard-header">
+          <div className="dashboard-left">
+  <h1 className="dashboard-title"> 
+    <button className="sidebar-toggle-inside" onClick={() => setIsSidebarOpen(!isSidebarOpen)}>
+      <FaBars />
+    </button>
+    Officer Dashboard
+  </h1>
+</div>
 
-        {/* Membership Insights */}
+        </div>
+
+        {/* Analytics Cards Section */}
         <div className="card analytics-section">
           <h2>Membership Insights</h2>
           <div className="stats-row">
@@ -118,7 +127,7 @@ const OfficerDashboardPage = () => {
             <h3>Members by Requirement</h3>
             {membersByRequirementData.length > 0 ? (
               <ResponsiveContainer width="100%" height={300}>
-                <BarChart data={membersByRequirementData} margin={{ top: 20, right: 30, left: 20, bottom: 5 }}>
+                <BarChart data={membersByRequirementData}>
                   <CartesianGrid strokeDasharray="3 3" />
                   <XAxis dataKey="requirement" />
                   <YAxis />
@@ -130,7 +139,7 @@ const OfficerDashboardPage = () => {
             ) : <p>No data available.</p>}
           </div>
         </div>
-
+        
         {/* Payment Analytics */}
         <div className="card analytics-section">
           <h2>Payment Analytics</h2>
